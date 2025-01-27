@@ -78,7 +78,7 @@ const handleCheckoutShopping = (e) => {
       </div>
     </div>
   );
-};
+;
 
 export default CartItem;
 
