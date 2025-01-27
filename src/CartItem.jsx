@@ -7,29 +7,46 @@ const CartItem = ({ onContinueShopping }) => {
   const cart = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
 
-  // Calculate total amount for all products in the cart
+
   const calculateTotalAmount = () => {
- 
+ let totalCost = 0;
+  cart.forEach(item => {
+    const itemSubtotal = item.quantity * item.cost;
+    totalCost += itemSubtotal;
+  });
+  return totalCost;
+};
   };
 
   const handleContinueShopping = (e) => {
-   
+      onContinueShopping();
   };
-
+const handleCheckoutShopping = (e) => {
+  alert('Functionality to be added for future reference');
+};
 
 
   const handleIncrement = (item) => {
+    dispatch(updateQuantity({ name: item.name, quantity: item.quantity + 1 }));
   };
 
   const handleDecrement = (item) => {
-   
+   if (item.quantity > 1) {
+      // Decrement quantity by 1 and update in the Redux store
+      dispatch(updateQuantity({ name: item.name, quantity: item.quantity - 1 }));
+    } else {
+      // If quantity is 1 and user decrements, remove the item from the cart
+      dispatch(removeItem(item)); // Remove the item from the cart
+    }
   };
 
   const handleRemove = (item) => {
+    dispatch(removeItem(item)); 
   };
 
   // Calculate total cost based on quantity for an item
   const calculateTotalCost = (item) => {
+     return item.quantity * item.cost;
   };
 
   return (
